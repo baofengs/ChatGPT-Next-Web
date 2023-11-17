@@ -2,6 +2,7 @@ import { getClientConfig } from "../config/client";
 import { ACCESS_CODE_PREFIX } from "../constant";
 import { ChatMessage, ModelType, useAccessStore } from "../store";
 import { ChatGPTApi } from "./platforms/openai";
+import { IChat } from "./platforms/iChant";
 
 export const ROLES = ["system", "user", "assistant"] as const;
 export type MessageRole = (typeof ROLES)[number];
@@ -70,11 +71,19 @@ interface ChatProvider {
   usage: () => void;
 }
 
+export const I_CHAT = 1;
+
 export class ClientApi {
   public llm: LLMApi;
 
-  constructor() {
-    this.llm = new ChatGPTApi();
+  constructor(type) {
+    switch (type) {
+      case I_CHAT:
+        this.llm = new IChat();
+        break;
+      default:
+        this.llm = new ChatGPTApi();
+    }
   }
 
   config() {}
@@ -124,6 +133,8 @@ export class ClientApi {
 }
 
 export const api = new ClientApi();
+
+export const iChat = new ClientApi(I_CHAT);
 
 export function getHeaders() {
   const accessStore = useAccessStore.getState();

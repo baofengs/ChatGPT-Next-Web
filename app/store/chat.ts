@@ -12,7 +12,7 @@ import {
   DEFAULT_SYSTEM_TEMPLATE,
   StoreKey,
 } from "../constant";
-import { api, RequestMessage } from "../client/api";
+import { api, RequestMessage, iChat } from "../client/api";
 import { ChatControllerPool } from "../client/controller";
 import { prettyObject } from "../utils/format";
 import { estimateTokenLength } from "../utils/token";
@@ -310,7 +310,8 @@ export const useChatStore = create<ChatStore>()(
         });
 
         // make request
-        api.llm.chat({
+        iChat.llm.chat({
+          // api.llm.chat({
           messages: sendMessages,
           config: { ...modelConfig, stream: true },
           onUpdate(message) {

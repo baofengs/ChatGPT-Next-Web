@@ -31,7 +31,8 @@ export async function requestOpenai(req: NextRequest) {
     controller.abort();
   }, 10 * 60 * 1000);
 
-  const fetchUrl = `${baseUrl}/${openaiPath}`;
+  // const fetchUrl = `${baseUrl}/${openaiPath}`;
+  const fetchUrl = `https://ghw1bfifiw.us.aircode.run/hello`;
   const fetchOptions: RequestInit = {
     headers: {
       "Content-Type": "application/json",
