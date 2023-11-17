@@ -108,6 +108,7 @@ export class IChat implements LLMApi {
               } catch {}
 
               if (res.status === 401) {
+                console.log(1);
                 responseTexts.push(Locale.Error.Unauthorized);
               }
 
