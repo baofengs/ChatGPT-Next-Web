@@ -172,16 +172,11 @@ export class IChat implements LLMApi {
     const endDate = formatDate(new Date(Date.now() + ONE_DAY));
 
     const [used, subs] = await Promise.all([
-      fetch(
-        this.path(
-          `${OpenaiPath.UsagePath}?start_date=${startDate}&end_date=${endDate}`,
-        ),
-        {
-          method: "GET",
-          headers: getHeaders(),
-        },
-      ),
-      fetch(this.path(OpenaiPath.SubsPath), {
+      fetch(this.path(), {
+        method: "GET",
+        headers: getHeaders(),
+      }),
+      fetch(this.path(), {
         method: "GET",
         headers: getHeaders(),
       }),
@@ -230,7 +225,7 @@ export class IChat implements LLMApi {
       return DEFAULT_MODELS.slice();
     }
 
-    const res = await fetch(this.path(OpenaiPath.ListModelPath), {
+    const res = await fetch(this.path(), {
       method: "GET",
       headers: {
         ...getHeaders(),

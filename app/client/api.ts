@@ -71,18 +71,23 @@ interface ChatProvider {
   usage: () => void;
 }
 
+export const OPEN_AI = 0;
 export const I_CHAT = 1;
 
 export class ClientApi {
   public llm: LLMApi;
 
-  constructor(type) {
+  constructor(type: number) {
+    this.llm = new IChat();
     switch (type) {
       case I_CHAT:
         this.llm = new IChat();
         break;
-      default:
+      case OPEN_AI:
         this.llm = new ChatGPTApi();
+        break;
+      default:
+        break;
     }
   }
 
@@ -132,7 +137,7 @@ export class ClientApi {
   }
 }
 
-export const api = new ClientApi();
+export const api = new ClientApi(OPEN_AI);
 
 export const iChat = new ClientApi(I_CHAT);
 
